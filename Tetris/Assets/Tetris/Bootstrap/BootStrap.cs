@@ -8,13 +8,13 @@ namespace Tetris.Bootstrap
     {
         [SerializeField] private TetrisView _tetrisView;
         
-        private Model.Tetris _tetris;
+        private Model.TetrisModel _tetrisModel;
         private TetrisMediator _mediator;
 
         private void Start()
         {
-            _tetris = new Model.Tetris();
-            _mediator = new TetrisMediator(_tetris, _tetrisView);
+            _tetrisModel = new Model.TetrisModel();
+            _mediator = new TetrisMediator(_tetrisModel, _tetrisView);
         }
     }
 }

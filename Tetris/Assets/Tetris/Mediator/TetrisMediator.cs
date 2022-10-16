@@ -5,24 +5,43 @@ namespace Tetris.Mediator
 {
     public class TetrisMediator
     {
-        private readonly ITetrisModel _tetris;
+        private readonly ITetrisModel _tetrisModel;
         private readonly ITetrisView _tetrisView;
 
-        public TetrisMediator(ITetrisModel tetris, ITetrisView tetrisView)
+        private MenuMediator _menuMediator;
+        private GameplayMediator _gameplayMediator;
+
+        public TetrisMediator(ITetrisModel tetrisModel, ITetrisView tetrisView)
         {
-            _tetris = tetris;
+            _tetrisModel = tetrisModel;
             _tetrisView = tetrisView;
+            SwitchToMenu();
+        }
 
-            _tetris.OnBoardStateChanged += _tetrisView.UpdateBoardState;
+        private void SwitchToGameplay()
+        {
+            if (_menuMediator != null)
+            {
+                _menuMediator.OnGameplayRequested -= SwitchToGameplay;
+                _menuMediator.Dispose();
+                _menuMediator = null;
+            }
 
-            _tetrisView.OnStartPressed += _tetris.Start;
+            _gameplayMediator = new GameplayMediator(_tetrisModel.SwitchToGameplay(), _tetrisView.SwitchToGameplayView());
+            _gameplayMediator.OnGameOver += SwitchToMenu;
+        }
+
+        private void SwitchToMenu()
+        {
+            if (_gameplayMediator != null)
+            {
+                _gameplayMediator.OnGameOver -= SwitchToMenu;
+                _gameplayMediator?.Dispose();
+                _gameplayMediator = null;
+            }
             
-            _tetrisView.OnLeftPressed += _tetris.MoveLeft;
-            _tetrisView.OnRightPressed += _tetris.MoveRight;
-            _tetrisView.OnDownPressed += _tetris.MoveDown;
-            _tetrisView.OnRotatePressed += _tetris.Rotate;
-            
-            _tetris.Start();
+            _menuMediator = new MenuMediator(_tetrisModel.SwitchToMenu(), _tetrisView.SwitchToMenuView());
+            _menuMediator.OnGameplayRequested += SwitchToGameplay;
         }
     }
 }
