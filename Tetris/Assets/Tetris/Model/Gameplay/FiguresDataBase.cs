@@ -3,7 +3,7 @@ using System.Linq;
 using Tetris.Model.Figures;
 using Random = UnityEngine.Random;
 
-namespace Tetris.Model
+namespace Tetris.Model.Gameplay
 {
     internal class FiguresDataBase : IFiguresDataBase
     {

@@ -1,6 +1,6 @@
 using Tetris.Model.Figures;
 
-namespace Tetris.Model
+namespace Tetris.Model.Gameplay
 {
     internal interface IFiguresDataBase
     {
