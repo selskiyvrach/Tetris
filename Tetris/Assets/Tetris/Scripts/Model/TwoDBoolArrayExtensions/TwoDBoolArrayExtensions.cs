@@ -55,7 +55,7 @@ namespace Tetris.Model.TwoDBoolArrayExtensions
                 array[column, row] = false;
         }
 
-        public static void SwitchRows(this bool[,] array, int rowA, int rowB)
+        public static void SwapRows(this bool[,] array, int rowA, int rowB)
         {
             for (int x = 0; x < array.GetLength(0); x++)
                 (array[x, rowA], array[x, rowB]) = (array[x, rowB], array[x, rowA]);

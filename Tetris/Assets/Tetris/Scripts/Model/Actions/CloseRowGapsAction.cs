@@ -14,13 +14,13 @@ namespace Tetris.Model.Actions
         {
             while (true)
             {
-                PerformDownTopSetOfSwitches(board, out bool switchesPerformed);
+                PerformDownTopSetOfSwaps(board, out bool switchesPerformed);
                 if (!switchesPerformed)
                     break;
             }
         }
 
-        private static void PerformDownTopSetOfSwitches(bool[,] board, out bool switchesPerformed)
+        private static void PerformDownTopSetOfSwaps(bool[,] board, out bool switchesPerformed)
         {
             switchesPerformed = false;
             for (int y = board.GetLength(1) - 1; y > 0; y--)
@@ -29,7 +29,7 @@ namespace Tetris.Model.Actions
                     continue;
                 if(board.RowIsEmpty(y - 1))
                     continue;
-                board.SwitchRows(y, y - 1);
+                board.SwapRows(y, y - 1);
                 switchesPerformed = true;
             }
         }
