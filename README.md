@@ -14,8 +14,7 @@ depends on all of the aforementioned modules in order to fill the
 dependencies. 
 
 ## Model
-The model revolves around operations upon 2d arrays of booleans (that represent
-figures and the game board) and consists of three layers laid below
+The model revolves around operations upon 2d arrays of booleans and consists of three layers laid below
 
 ### Generic operations <br/>
 <img src="ReadmeResources/img_extension_methods_list.png" height="200"> <br/>
