@@ -26,7 +26,7 @@ bool[,] type
 ### Gameplay-related algorithms <br/>
 <img src="ReadmeResources/img_algorithm_example.png" height="350"> <br/>
 A set of atomic algorithms, such as "move a figure down the board"
-or "collapse empty board rows top-down". These algorithms'
+or "collapse empty board rows". These algorithms'
 objects inherit from either FigureAction or BoardAction and 
 remain very readable since they're based upon previous
 level's methods (pic)
