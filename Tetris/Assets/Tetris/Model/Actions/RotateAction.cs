@@ -6,21 +6,27 @@ namespace Tetris.Model.Actions
 {
     public class RotateAction : FigureAction
     {
-        public override bool TryAct(bool[,] board, Figure figure, ref Vector2Int figurePositionOffset)
+        public override bool TryAct(bool[,] board, Figure figure, ref Vector2Int position) => 
+            TryRotate(board, figure, ref position);
+
+        private static bool TryRotate(bool[,] board, Figure figure, ref Vector2Int position)
         {
-            var sizeBefore = new Vector2Int(figure.Shape.GetLength(0), figure.Shape.GetLength(1));
-            board.RemoveProjection(figure.Shape, figurePositionOffset);
+            var boundsSizeBefore = new Vector2Int(figure.Shape.GetLength(0), figure.Shape.GetLength(1));
+            board.RemoveProjection(figure.Shape, position);
+
             var newShape = figure.Shape.RotateCounterClockwise();
-            var sizeAfter = new Vector2Int(newShape.GetLength(0), newShape.GetLength(1));
-            var offsetDelta = (sizeBefore - sizeAfter) / 2;
-            if (newShape.OverlapsOrOutOfBounds(board, figurePositionOffset + offsetDelta))
+            var boundsSizeAfter = new Vector2Int(newShape.GetLength(0), newShape.GetLength(1));
+            var positionDelta = (boundsSizeBefore - boundsSizeAfter) / 2;
+
+            if (newShape.OverlapsOrOutOfBounds(board, position + positionDelta))
             {
-                board.AddProjection(figure.Shape, figurePositionOffset);
+                board.AddProjection(figure.Shape, position);
                 return false;
             }
+
             figure.Shape = newShape;
-            figurePositionOffset += offsetDelta;
-            board.AddProjection(figure.Shape, figurePositionOffset);
+            position += positionDelta;
+            board.AddProjection(figure.Shape, position);
             return true;
         }
     }

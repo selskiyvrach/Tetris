@@ -6,25 +6,27 @@ namespace Tetris.Model.Actions
     {
         public override bool TryAct(bool[,] board)
         {
-            while (true)
-            {
-                MoveOneLineDown(board, out bool switchesPerformed);
-                if(!switchesPerformed)
-                    break;
-            }
+            CollapseRowGaps(board);
             return true;
         }
 
-        private static void MoveOneLineDown(bool[,] board, out bool switchesPerformed)
+        private static void CollapseRowGaps(bool[,] board)
+        {
+            while (true)
+            {
+                PerformDownTopSetOfSwitches(board, out bool switchesPerformed);
+                if (!switchesPerformed)
+                    break;
+            }
+        }
+
+        private static void PerformDownTopSetOfSwitches(bool[,] board, out bool switchesPerformed)
         {
             switchesPerformed = false;
-
-            for (int y = board.GetLength(1) - 1; y >= 0; y--)
+            for (int y = board.GetLength(1) - 1; y > 0; y--)
             {
                 if(!board.RowIsEmpty(y))
                     continue;
-                if(y == 0)
-                    break;
                 if(board.RowIsEmpty(y - 1))
                     continue;
                 board.SwitchRows(y, y - 1);

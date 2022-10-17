@@ -8,16 +8,16 @@ namespace Tetris.Model.Actions
     {
         protected abstract Vector2Int MoveDelta { get; }
 
-        public sealed override bool TryAct(bool[,] board, Figure figure, ref Vector2Int figurePositionOffset)
+        public sealed override bool TryAct(bool[,] board, Figure figure, ref Vector2Int position)
         {
-            board.RemoveProjection(figure.Shape, figurePositionOffset);
-            if (figure.Shape.OverlapsOrOutOfBounds(board, figurePositionOffset + MoveDelta))
+            board.RemoveProjection(figure.Shape, position);
+            if (figure.Shape.OverlapsOrOutOfBounds(board, position + MoveDelta))
             {
-                board.AddProjection(figure.Shape, figurePositionOffset);
+                board.AddProjection(figure.Shape, position);
                 return false;
             }
-            figurePositionOffset += MoveDelta;
-            board.AddProjection(figure.Shape, figurePositionOffset);
+            position += MoveDelta;
+            board.AddProjection(figure.Shape, position);
             return true;
         }
     }
