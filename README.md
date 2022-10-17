@@ -1,4 +1,4 @@
-## Overall
+## Overview
 
 A tetris clone I've made to exercise my architecture knowledge 
 and theories on a small scale project.
