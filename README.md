@@ -1,7 +1,7 @@
 ## Overview
 
 A tetris clone I've made to exercise my architecture knowledge 
-and theories on a small scale project.
+and clean code approaches on a small scale project.
 
 <img src="ReadmeResources/img_assemblies_structure.png"> <br/>
 It's "model-view-mediator controller" architecture, with the 
