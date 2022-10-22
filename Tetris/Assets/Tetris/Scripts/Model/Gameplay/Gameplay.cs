@@ -1,42 +1,34 @@
 using System;
-using Tetris.Model.Figures;
-using Tetris.Model.TwoDBoolArrayExtensions;
 using Tetris.ModelDefinition;
-using UnityEngine;
 
 namespace Tetris.Model.Gameplay
 {
-    internal class Gameplay : IGameplay, IGameplayHandle, IDisposable, IGameOverHandler
+    internal class Gameplay : IGameplay, IDisposable, IGameOverHandler
     {
+        private readonly GameplaySharedMatter _gameplaySharedMatter;
         private readonly CoreActionsPerformer _coreActionsPerformer;
         private readonly PlayerActionsPerformer _playerActionsPerformer;
         
         public event Action OnGameOver;
         public event Action<bool[,]> OnBoardStateChanged;
         public IGameplayControlsListener ControlsListener => _playerActionsPerformer;
-        public bool[,] Board { get; } = new bool[10, 20];
-        public Figure CurrentFigure { get; set; }
-        public Vector2Int FigurePosition { get; set; }
-
+        
         public Gameplay()
         {
-            _coreActionsPerformer = new CoreActionsPerformer(this, this);
-            _playerActionsPerformer = new PlayerActionsPerformer(this);
+            _gameplaySharedMatter = new GameplaySharedMatter(boardState => OnBoardStateChanged?.Invoke(boardState));
+            _coreActionsPerformer = new CoreActionsPerformer(_gameplaySharedMatter, this);
+            _playerActionsPerformer = new PlayerActionsPerformer(_gameplaySharedMatter);
         }
         
         public void Run() =>
             _coreActionsPerformer.Run();
-
-        public void RaiseOnChanged() => 
-            OnBoardStateChanged?.Invoke(Board);
 
         public void RaiseOnGameOver() => 
             OnGameOver?.Invoke();
 
         public void Dispose()
         {
-            Board.Clear();
-            OnBoardStateChanged?.Invoke(Board);
+            _gameplaySharedMatter.Reset();
             _coreActionsPerformer.Dispose();
         }
     }
