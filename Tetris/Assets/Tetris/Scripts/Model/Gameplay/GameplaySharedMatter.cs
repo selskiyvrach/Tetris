@@ -18,7 +18,7 @@ namespace Tetris.Model.Gameplay
         public void RaiseOnChanged() => 
             _onBoardChangedCallback?.Invoke(Board);
 
-        public void Reset()
+        public void Dispose()
         {
             Board.Clear();
             _onBoardChangedCallback?.Invoke(Board);

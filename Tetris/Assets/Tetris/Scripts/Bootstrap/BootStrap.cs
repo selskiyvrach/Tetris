@@ -1,4 +1,5 @@
 using Tetris.Mediator;
+using Tetris.Model;
 using Tetris.View;
 using UnityEngine;
 
@@ -8,12 +9,12 @@ namespace Tetris.Bootstrap
     {
         [SerializeField] private TetrisView _tetrisView;
         
-        private Model.TetrisModel _tetrisModel;
+        private TetrisModel _tetrisModel;
         private TetrisMediator _mediator;
 
         private void Start()
         {
-            _tetrisModel = new Model.TetrisModel();
+            _tetrisModel = new TetrisModel();
             _mediator = new TetrisMediator(_tetrisModel, _tetrisView);
         }
     }
