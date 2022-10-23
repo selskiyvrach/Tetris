@@ -24,7 +24,6 @@ namespace Tetris.Model.Gameplay
         internal async void Run()
         {
             SpawnNewFigure();
-            _gameplayHandle.RaiseOnChanged();
             _cancellationTokenSource = new CancellationTokenSource();
             var token = _cancellationTokenSource.Token;
             while (true)
