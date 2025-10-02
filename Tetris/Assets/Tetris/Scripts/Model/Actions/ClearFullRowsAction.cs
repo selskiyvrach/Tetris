@@ -1,10 +1,8 @@
-using Tetris.Model.TwoDBoolArrayExtensions;
-
 namespace Tetris.Model.Actions
 {
     public class ClearFullRowsAction : BoardAction
     {
-        public override bool TryAct(bool[,] board)
+        public override bool TryAct(Board board)
         {
             var atLeastOneCleared = false;
             for (int y = 0; y < board.GetLength(1); y++)

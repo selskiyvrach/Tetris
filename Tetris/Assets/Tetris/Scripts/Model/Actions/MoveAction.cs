@@ -1,5 +1,3 @@
-using Tetris.Model.Figures;
-using Tetris.Model.TwoDBoolArrayExtensions;
 using UnityEngine;
 
 namespace Tetris.Model.Actions
@@ -8,16 +6,16 @@ namespace Tetris.Model.Actions
     {
         protected abstract Vector2Int MoveDelta { get; }
 
-        public sealed override bool TryAct(bool[,] board, Figure figure, ref Vector2Int position)
+        public sealed override bool TryAct(bool[,] board, Shape shape, ref Vector2Int position)
         {
-            board.RemoveProjection(figure.Shape, position);
-            if (figure.Shape.OverlapsOrOutOfBounds(board, position + MoveDelta))
+            board.RemoveProjection(shape.Cells, position);
+            if (shape.Cells.OverlapsOrOutOfBounds(board, position + MoveDelta))
             {
-                board.AddProjection(figure.Shape, position);
+                board.AddProjection(shape.Cells, position);
                 return false;
             }
             position += MoveDelta;
-            board.AddProjection(figure.Shape, position);
+            board.AddProjection(shape.Cells, position);
             return true;
         }
     }

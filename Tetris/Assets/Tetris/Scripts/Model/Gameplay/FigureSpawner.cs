@@ -5,18 +5,14 @@ namespace Tetris.Model.Gameplay
     internal class FigureSpawner
     {
         private readonly IGameplayHandle _gameplayHandle;
-        private readonly IFiguresDataBase _figuresDataBase;
         private readonly PlaceNewFigureAtBoardAction _placeNewFigureAction = new();
 
-        public FigureSpawner(IFiguresDataBase figuresDataBase, IGameplayHandle gameplayHandle)
-        {
-            _figuresDataBase = figuresDataBase;
+        public FigureSpawner(IGameplayHandle gameplayHandle) => 
             _gameplayHandle = gameplayHandle;
-        }
 
         internal void SpawnNewFigure(out bool figureFits)
         {
-            _gameplayHandle.CurrentFigure = _figuresDataBase.GetRandom();
+            _gameplayHandle.CurrentShape = Shape.Random;
             SetupPosition(out bool figureFitsLocal);
             _gameplayHandle.RaiseOnChanged();
             figureFits = figureFitsLocal;
@@ -24,12 +20,12 @@ namespace Tetris.Model.Gameplay
 
         private void SetupPosition(out bool figureFits)
         {
-            var figurePosition = _gameplayHandle.FigurePosition;
+            var figurePosition = _gameplayHandle.ShapePosition;
             figureFits = _placeNewFigureAction.TryAct(
                 _gameplayHandle.Board,
-                _gameplayHandle.CurrentFigure,
+                _gameplayHandle.CurrentShape,
                 ref figurePosition);
-            _gameplayHandle.FigurePosition = figurePosition;
+            _gameplayHandle.ShapePosition = figurePosition;
         }
     }
 }

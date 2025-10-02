@@ -1,5 +1,3 @@
-using Tetris.Model.TwoDBoolArrayExtensions;
-
 namespace Tetris.Model.Actions
 {
     public class CloseRowGapsAction : BoardAction

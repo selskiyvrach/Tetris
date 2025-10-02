@@ -6,33 +6,33 @@ namespace Tetris.View
 {
     public class GameplayControls : MonoBehaviour, IGameplayControls
     {
-        [SerializeField] private GameplayControlsKeycodes _keyCodes;
+        [SerializeField] private KeyCode _downKeyCode = KeyCode.S;
+        [SerializeField] private KeyCode _rightKeyCode = KeyCode.D;
+        [SerializeField] private KeyCode _leftKeyCode = KeyCode.A;
+        [SerializeField] private KeyCode _rotateKeyCode = KeyCode.W;
         [SerializeField] private float _downRepeatTime = 0.1f;
         private float _downTimeHeld;
 
-        public event Action OnLeftPressed;
-        public event Action OnRightPressed;
-        public event Action OnDownPressed;
-        public event Action OnRotatePressed;
-        
+        public event Action<InputCommand> OnPlayerInput; 
+
         private void Update()
         {
-            if(Input.GetKeyDown(_keyCodes.RightKeyCode))
+            if(Input.GetKeyDown(_rightKeyCode))
                 OnRightPressed?.Invoke();
-            if(Input.GetKeyDown(_keyCodes.LeftKeyCode))
+            if(Input.GetKeyDown(_leftKeyCode))
                 OnLeftPressed?.Invoke();
-            if(Input.GetKeyDown(_keyCodes.RotateKeyCode))
+            if(Input.GetKeyDown(_rotateKeyCode))
                 OnRotatePressed?.Invoke();
             UpdateDownCommand();
         }
 
         private void UpdateDownCommand()
         {
-            if (Input.GetKeyDown(_keyCodes.DownKeyCode))
+            if (Input.GetKeyDown(_downKeyCode))
                 OnDownPressed?.Invoke();
-            else if (Input.GetKeyUp(_keyCodes.DownKeyCode))
+            else if (Input.GetKeyUp(_downKeyCode))
                 _downTimeHeld = 0;
-            if (!Input.GetKey(_keyCodes.DownKeyCode)) 
+            if (!Input.GetKey(_downKeyCode)) 
                 return;
             if((_downTimeHeld += Time.deltaTime) < _downRepeatTime)
                 return;

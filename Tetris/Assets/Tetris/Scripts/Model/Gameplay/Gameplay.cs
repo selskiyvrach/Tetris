@@ -3,9 +3,8 @@ using Tetris.ModelDefinition;
 
 namespace Tetris.Model.Gameplay
 {
-    internal class Gameplay : IGameplay, IDisposable, IGameOverHandler
+    internal class Gameplay : IGameplay, IGameOverHandler
     {
-        private readonly FiguresDataBase _figuresDataBase = new();
         private readonly GameplaySharedMatter _gameplaySharedMatter;
         private readonly FigureSpawner _figureSpawner;
         private readonly CoreActionsPerformer _coreActionsPerformer;
@@ -17,8 +16,8 @@ namespace Tetris.Model.Gameplay
         
         public Gameplay()
         {
-            _gameplaySharedMatter = new GameplaySharedMatter(OnBoardChangedCallback);
-            _figureSpawner = new FigureSpawner(_figuresDataBase, _gameplaySharedMatter);
+            _gameplaySharedMatter = new GameplaySharedMatter { Board = new Board(columns: 10, rows: 20) };
+            _figureSpawner = new FigureSpawner(_gameplaySharedMatter);
             _coreActionsPerformer = new CoreActionsPerformer(_gameplaySharedMatter, gameOverHandler: this, _figureSpawner);
             _playerActionsPerformer = new PlayerActionsPerformer(_gameplaySharedMatter);
         }
@@ -28,12 +27,6 @@ namespace Tetris.Model.Gameplay
 
         public void RaiseOnGameOver() => 
             OnGameOver?.Invoke();
-
-        public void Dispose()
-        {
-            _gameplaySharedMatter.Dispose();
-            _coreActionsPerformer.Dispose();
-        }
 
         private void OnBoardChangedCallback(bool[,] board) => 
             OnBoardStateChanged?.Invoke(board);

@@ -28,10 +28,10 @@ namespace Tetris.Model.Gameplay
         
         private void PerformFigureAction(FigureAction action)
         {
-            var figurePosition = _gameplayHandle.FigurePosition;
-            if (!action.TryAct(_gameplayHandle.Board, _gameplayHandle.CurrentFigure, ref figurePosition))
+            var figurePosition = _gameplayHandle.ShapePosition;
+            if (!action.TryAct(_gameplayHandle.Board, _gameplayHandle.CurrentShape, ref figurePosition))
                 return;
-            _gameplayHandle.FigurePosition = figurePosition;
+            _gameplayHandle.ShapePosition = figurePosition;
             _gameplayHandle.RaiseOnChanged();
         }
     }

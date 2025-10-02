@@ -2,7 +2,7 @@ using System;
 using Tetris.ModelDefinition;
 using Tetris.ViewDefinition;
 
-namespace Tetris.Mediator
+namespace Tetris.Presenter
 {
     internal class MenuMediator : IDisposable
     {

@@ -1,13 +1,12 @@
-using Tetris.Model.Figures;
 using UnityEngine;
 
 namespace Tetris.Model.Gameplay
 {
     internal interface IGameplayHandle
     {
-        bool[,] Board { get; }
-        Figure CurrentFigure { get; set; }
-        Vector2Int FigurePosition { get; set; }
+        Board Board { get; }
+        Shape CurrentShape { get; set; }
+        Vector2Int ShapePosition { get; set; }
         void RaiseOnChanged();
     }
 }

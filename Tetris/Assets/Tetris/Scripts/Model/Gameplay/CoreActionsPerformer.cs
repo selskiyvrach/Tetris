@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Tetris.Model.Actions;
@@ -23,20 +24,27 @@ namespace Tetris.Model.Gameplay
 
         internal async void Run()
         {
-            SpawnNewFigure();
-            _cancellationTokenSource = new CancellationTokenSource();
-            var token = _cancellationTokenSource.Token;
-            while (true)
+            try
             {
-                try
+                SpawnNewFigure();
+                _cancellationTokenSource = new CancellationTokenSource();
+                var token = _cancellationTokenSource.Token;
+                while (true)
                 {
-                    await Task.Delay(350, token);
+                    try
+                    {
+                        await Task.Delay(350, token);
+                    }
+                    catch (TaskCanceledException exception)
+                    {
+                        break;
+                    }
+                    PerformGameplayTick();
                 }
-                catch (TaskCanceledException exception)
-                {
-                    break;
-                }
-                PerformGameplayTick();
+            }
+            catch (Exception e)
+            {
+                throw; // TODO handle exception
             }
         }
 
@@ -49,11 +57,11 @@ namespace Tetris.Model.Gameplay
 
         private void PerformGameplayTick()
         {
-            var figurePosition = _gameplayHandle.FigurePosition;
-            if (_moveDownAction.TryAct(_gameplayHandle.Board, _gameplayHandle.CurrentFigure, ref figurePosition))
+            var figurePosition = _gameplayHandle.ShapePosition;
+            if (_moveDownAction.TryAct(_gameplayHandle.Board, _gameplayHandle.CurrentShape, ref figurePosition))
             {
                 _gameplayHandle.RaiseOnChanged();
-                _gameplayHandle.FigurePosition = figurePosition;
+                _gameplayHandle.ShapePosition = figurePosition;
                 return;
             }
             if (_clearFullRowsAction.TryAct(_gameplayHandle.Board))
@@ -63,8 +71,5 @@ namespace Tetris.Model.Gameplay
             }
             SpawnNewFigure();
         }
-        
-        public void Dispose() =>
-            _cancellationTokenSource.Cancel();
     }
 }
