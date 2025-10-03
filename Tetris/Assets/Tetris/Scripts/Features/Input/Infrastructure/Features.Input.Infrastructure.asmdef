@@ -1,0 +1,18 @@
+{
+    "name": "Input.Infrastructure",
+    "rootNamespace": "",
+    "references": [
+        "GUID:7933f53693384adb840db4d777d3e33d",
+        "GUID:8f3de34dfc264aa9b5bac724f3bca1b9",
+        "GUID:d766001b29ef5d24098e6c0c7e2c77cd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

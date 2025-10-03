@@ -1,0 +1,17 @@
+{
+    "name": "Input.App",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4e649ced11184ffa9b537e78a1f846da",
+        "GUID:8f3de34dfc264aa9b5bac724f3bca1b9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
